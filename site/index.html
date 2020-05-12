@@ -1,0 +1,228 @@
+f<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="js/demo/main.js"></script>
+    <title>NY Businesses Report</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<script type="text/javascript">
+
+</script>
+
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-white sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas text-dark fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text text-dark mx-3 h3">NYBR<sup></sup></div>
+        </a>
+
+        <div class="dropdown col-xl-3 col-md-6 mb-4">
+            <!--              <div class="card border-left-success shadow h-100 py-2">-->
+            <div class="card-body">
+                <div class="row2 no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <select onchange="change_heading(this)" name="Features" id="dropdown"
+                                class="text-secondary dropbtn" #dropdown>
+                            <div class="dropdown-content">
+                                <option value="none" selected disabled hidden>Select an Option</option>
+                                <option class="dropdown-content" value='LicenseType'>License Type</option>
+                                <option class="dropdown-content" value='StartDay'>Start Day</option>
+                                <option class="dropdown-content" value='StartMonth'>Start Month</option>
+                                <option class="dropdown-content" value='StartYear'>Start Year</option>
+                                <option class="dropdown-content" value='EndDay'>End Day</option>
+                                <option class="dropdown-content" value='EndMonth'>End Month</option>
+                                <option class="dropdown-content" value='EndYear'>End Year</option>
+                                <option class="dropdown-content" value='ApplicationorRenewal'>Application or Renewal
+                                </option>
+                                <option class="dropdown-content" value='Status'>Status of Application</option>
+                                <option class="dropdown-content" value='LicenseCategory'>License Category</option>
+                                <option class="dropdown-content" value='ApplicationCategory'>Application Category
+                                </option>
+                                <option class="dropdown-content" value='City'>City</option>
+                                <option class="dropdown-content" value='Zip'>Zip</option>
+                                <option class="dropdown-content" value='LicenseStatus'>License Status</option>
+                                <option class="dropdown-content" value='LicenseExpirationDateEndDay'>License Expiration
+                                    Day
+                                </option>
+                                <option class="dropdown-content" value='LicenseExpirationDateEndMonth'>License
+                                    Expiration Month
+                                </option>
+                                <option class="dropdown-content" value='LicenseExpirationDateEndYear'>License Expiration
+                                    Year
+                                </option>
+                                <option class="dropdown-content" value='LicenseCreationDateStartDay'>License Creation
+                                    Day
+                                </option>
+                                <option class="dropdown-content" value='LicenseCreationDateStartMonth'>License Creation
+                                    Month
+                                </option>
+                                <option class="dropdown-content" value='LicenseCreationDateStartYear'>License Creation
+                                    Year
+                                </option>
+                            </div>
+                        </select>
+                        <br>
+                        <br>
+                        <button class="bottom-button" onclick="update_pie(dropdown.value)">Visualize Pie</button>
+                        <br>
+                        <button id="bar-vis" class="bottom-button" onclick="update(dropdown.value)">Visualize Bar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <dixv id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+
+                    <h1 class="h1 mb-0 text-gray-900">New York Business Records
+                        <!--            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>-->
+                        <div class="help-tip">
+                            <p>I have visualized data for the licenses of business operating in the state of NYC. For
+                                this purpose, I merged two datasets, <b>Legally Operating Businesses</b> and <b>License
+                                    Applications</b> available on NYC open data site.
+                                <br><br>
+                                Following were the attributes used:<br><br>
+
+                                DCA License Number: License Number<br>
+                                Business Name: Name of the Business asking for License<br>
+                                Status: Status of the application currently<br>
+                                ApplicationorRenewal: Is the application new or for renewal<br>
+                                LicenseStatus: Status of the License currently<br>
+                                LicenseCategory: Category of License<br>
+                                Zip: Area code of the License application<br>
+                                LicenseType: Type of License<br>
+                                ApplicationCategory: Category of application<br>
+                                City: City of the License application<br>
+                                EndYear: Year when DCA reviewed the application<br>
+                                EndMonth: Month when DCA reviewed the application<br>
+                                EndDay: Day when DCA reviewed the application<br>
+                                StartYear: Year when DCA received the application<br>
+                                StartMonth: Month when DCA received the application<br>
+                                StartDay: Day when DCA received the application<br>
+                                LicenseCreationDateStartYear: Start year of the issued License<br>
+                                LicenseCreationDateStartMonth: Start month of the issued License<br>
+                                LicenseCreationDateStartDay: Start day of the issued License<br>
+                                LicenseExpirationDateEndYear: End year of the issued License<br>
+                                LicenseExpirationDateEndMonth: End month of the issued License<br>
+                                LicenseExpirationDateEndDay: End day of the issued License<br>
+
+                            </p>
+                        </div>
+                    </h1>
+                </div>
+
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+
+            <h1 id="head11" class="h1 head1 mb-0 text-gray-800">Dashboard</h1>
+
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div id="content-ex" class="modal-content">
+                    <span class="close">&times;</span>
+                    <h5 id="head13" class="h5 mb-0 text-gray-800">Dashboard</h5>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <div class="chart-pie pt-4 pb-2">
+                    <svg width="800" height="600"></svg>
+                    <!--                    <canvas id="myPieChart"></canvas>-->
+                </div>
+                <p id="value"></p>
+                <div id="slider" width="2000" height="100"></div>
+
+
+            </div>
+            <!--              </div>-->
+            <!--            </div>-->
+
+
+    </div>
+</div>
+
+</div>
+
+
+</div>
+
+
+<footer class="sticky-footer bg-white">
+    <div class="container my-auto">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; VishwamPandya 2019</span>
+        </div>
+    </div>
+</footer>
+
+</div>
+
+</div>
+
+
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="js/sb-admin-2.min.js"></script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="js/demo/main.js"></script>
+<script src="js/demo/pie.js"></script>
+<script src="js/demo/histogram.js"></script>
+<script src="js/demo/bar.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://unpkg.com/d3-simple-slider"></script>
+
+
+</body>
+
+</html>
